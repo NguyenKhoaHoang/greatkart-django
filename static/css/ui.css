@@ -429,8 +429,9 @@ p:last-child {
 
 .brand-wrap .logo, .navbar-brand .logo {
   margin-right: 7px;
-  max-height: 42px;
+  max-height: 100px;
   display: inline-block;
+  max-width: 200px;
 }
 
 .navbar-main .nav-link {

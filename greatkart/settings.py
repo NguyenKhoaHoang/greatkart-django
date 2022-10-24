@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TAX = 3
+
 
 # Application definition
 

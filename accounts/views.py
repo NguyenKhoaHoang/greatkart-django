@@ -14,6 +14,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 import requests
+
+from orders.models import Order, OrderProduct
 # Create your views here.
 
 
@@ -157,7 +159,15 @@ def activate(request, uidb64, token):
 
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    current_user = request.user
+
+    orders = Order.objects.filter(user=current_user, is_ordered = True)
+    orders_products = OrderProduct.objects.filter(user=current_user, ordered=True)
+    context = {
+        'orders': orders,
+        'orders_products': orders_products
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
 
 def forgotPassword(request):

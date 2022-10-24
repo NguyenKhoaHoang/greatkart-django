@@ -168,7 +168,6 @@
                 .then((response) => response.json())
                 .then((data) => {
                     window.location.href = redirect_url + '?order_number='+data.order_number+'&transID='+data.transID;
-                
                 });
                 
             }

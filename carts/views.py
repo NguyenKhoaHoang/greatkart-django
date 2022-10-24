@@ -4,6 +4,7 @@ from carts.models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from store.models import Product, Variation
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 
@@ -175,7 +176,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total += (cart_item.product.price*cart_item.quantity)
             quantity += cart_item.quantity
-        tax = (2*total)/100
+        tax = (settings.TAX*total)/100
         grand_total = total+tax
     except ObjectDoesNotExist:
         pass

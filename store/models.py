@@ -1,10 +1,16 @@
-from tkinter import CASCADE
 from django.db import models
 from django.urls import reverse
 from category.models import Category
 
 # Create your models here.
 
+class Author(models.Model):
+    author_name = models.TextField(max_length=200, unique=True)
+    created_date    = models.DateTimeField(auto_now_add=True)
+    modified_date   = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.author_name
 
 class Product(models.Model):
     product_name    = models.CharField(max_length=200, unique=True)
@@ -15,6 +21,7 @@ class Product(models.Model):
     stock           = models.IntegerField()
     is_available    = models.BooleanField(default=True)
     category        = models.ForeignKey(Category, on_delete=models.CASCADE)
+    author          = models.ForeignKey(Author, on_delete = models.CASCADE, null=True)
     created_date    = models.DateTimeField(auto_now_add=True)
     modified_date   = models.DateTimeField(auto_now=True)
 
@@ -31,9 +38,13 @@ class VariationManager(models.Manager):
     def sizes(self):
         return super(VariationManager,self).filter(variation_category='size',is_active=True)
 
+    def types(self):
+        return super(VariationManager,self).filter(variation_category='type',is_active=True)
+
 variation_category_choice = {
     ('color','color'),
     ('size','size'),
+    ('type','type')
 }
 
 class Variation(models.Model):
